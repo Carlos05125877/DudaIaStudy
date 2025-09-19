@@ -39,8 +39,8 @@ export function Flashcard({ front, back }: FlashcardProps) {
 
         {/* Back of the card */}
         <Card className={cn(cardBaseClasses, 'bg-primary text-primary-foreground border-2 border-primary rotate-y-180 shadow-lg')}>
-          <CardContent className="p-0 rotate-y-180">
-            <p className="text-md">{back}</p>
+          <CardContent className="p-0">
+            <p className="text-md" style={{ transform: 'rotateY(180deg)' }}>{back}</p>
           </CardContent>
         </Card>
       </div>
