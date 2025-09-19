@@ -53,97 +53,97 @@ export default function StudyPlansPage() {
 
   return (
     <div className="container mx-auto p-4 md:p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-headline text-3xl font-bold">My Study Plans</h1>
-        <Dialog open={isCreateOpen} onOpenChange={setCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus />
-              Create New Plan
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[625px]">
-            <DialogHeader>
-              <DialogTitle className="font-headline text-2xl">Create a New Study Plan</DialogTitle>
-              <DialogDescription>
-                Provide a title and your legal text to get started.
-              </DialogDescription>
-            </DialogHeader>
-            <CreateStudyPlanForm setIsOpen={setCreateOpen} />
-          </DialogContent>
-        </Dialog>
-      </div>
+       <Dialog open={isCreateOpen} onOpenChange={setCreateOpen}>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="font-headline text-3xl font-bold">My Study Plans</h1>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus />
+                Create New Plan
+              </Button>
+            </DialogTrigger>
+        </div>
 
-      {studyPlans.length === 0 ? (
-        <div className="text-center py-16 border-2 border-dashed rounded-lg">
-           {noPlansImage && (
-            <div className="relative w-full h-64 mb-4">
-              <Image
-                src={noPlansImage.imageUrl}
-                alt={noPlansImage.description}
-                width={600}
-                height={400}
-                data-ai-hint={noPlansImage.imageHint}
-                className="w-1/2 max-w-sm mx-auto object-contain"
-              />
-            </div>
-          )}
-          <h2 className="font-headline text-2xl font-semibold">No Study Plans Yet</h2>
-          <p className="text-muted-foreground mt-2 mb-4">
-            Click &quot;Create New Plan&quot; to generate your first study plan.
-          </p>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus />
-              Create New Plan
-            </Button>
-          </DialogTrigger>
-        </div>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {studyPlans.map(plan => (
-            <Card key={plan.id} className="flex flex-col transition-all hover:shadow-lg">
-              <CardHeader>
-                <CardTitle className="font-headline text-xl">{plan.title}</CardTitle>
-                <CardDescription>
-                  Created {formatDistanceToNow(new Date(plan.createdAt), { addSuffix: true })}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-sm text-muted-foreground line-clamp-3">{plan.summary}</p>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button asChild variant="outline">
-                  <Link href={`/study-plans/${plan.id}`}>
-                    <BookOpen />
-                    View Plan
-                  </Link>
-                </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive" size="icon">
-                      <Trash2 />
-                      <span className="sr-only">Delete plan</span>
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your study plan.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => deleteStudyPlan(plan.id)}>Continue</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
+        {studyPlans.length === 0 ? (
+          <div className="text-center py-16 border-2 border-dashed rounded-lg">
+            {noPlansImage && (
+              <div className="relative w-full h-64 mb-4">
+                <Image
+                  src={noPlansImage.imageUrl}
+                  alt={noPlansImage.description}
+                  width={600}
+                  height={400}
+                  data-ai-hint={noPlansImage.imageHint}
+                  className="w-1/2 max-w-sm mx-auto object-contain"
+                />
+              </div>
+            )}
+            <h2 className="font-headline text-2xl font-semibold">No Study Plans Yet</h2>
+            <p className="text-muted-foreground mt-2 mb-4">
+              Click &quot;Create New Plan&quot; to generate your first study plan.
+            </p>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus />
+                Create New Plan
+              </Button>
+            </DialogTrigger>
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {studyPlans.map(plan => (
+              <Card key={plan.id} className="flex flex-col transition-all hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle className="font-headline text-xl">{plan.title}</CardTitle>
+                  <CardDescription>
+                    Created {formatDistanceToNow(new Date(plan.createdAt), { addSuffix: true })}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-sm text-muted-foreground line-clamp-3">{plan.summary}</p>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button asChild variant="outline">
+                    <Link href={`/study-plans/${plan.id}`}>
+                      <BookOpen />
+                      View Plan
+                    </Link>
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" size="icon">
+                        <Trash2 />
+                        <span className="sr-only">Delete plan</span>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete your study plan.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => deleteStudyPlan(plan.id)}>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle className="font-headline text-2xl">Create a New Study Plan</DialogTitle>
+            <DialogDescription>
+              Provide a title and your legal text to get started.
+            </DialogDescription>
+          </DialogHeader>
+          <CreateStudyPlanForm setIsOpen={setCreateOpen} />
+        </DialogContent>
+       </Dialog>
     </div>
   );
 }
