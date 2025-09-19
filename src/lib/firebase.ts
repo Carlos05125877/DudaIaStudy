@@ -7,7 +7,7 @@ import { getAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 const firebaseConfig = {
   projectId: "studio-3596570368-24a1e",
   appId: "1:196483799878:web:390ad0432807b010352347",
-  apiKey: "AIzaSyBrEmTOkCLhTmekw6NRREkY4vMZlXop3fw",
+  apiKey: "AIzaSyC21n_x-04_g1Ilsy_GGPdlGqa-1yOoGPg",
   authDomain: "studio-3596570368-24a1e.firebaseapp.com",
   measurementId: "",
   messagingSenderId: "196483799878"
