@@ -22,10 +22,8 @@ export async function handleGenerateStudyPlan(title: string, legalText: string) 
       generateObservations({ legalText }),
     ]);
 
-    const combinedResult = {
-      summary: studyPlanResult.summary,
-      quizzes: studyPlanResult.quizzes,
-      flashcards: studyPlanResult.flashcards,
+    const combinedResult: GenerateStudyPlanFromTextOutput & { observations: string } = {
+      ...studyPlanResult,
       observations: observationsResult.observations,
     };
 

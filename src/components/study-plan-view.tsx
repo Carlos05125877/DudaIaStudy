@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -23,79 +23,104 @@ import {
 import { Flashcard } from './flashcard';
 import type { StudyPlan } from '@/lib/types';
 import { ScrollArea } from './ui/scroll-area';
+import { Lightbulb, Scale, GraduationCap } from 'lucide-react';
 
-type StudyPlanViewProps = {
-  plan: StudyPlan;
-};
-
-// A very simple heuristic to split quiz question and answer.
-// Assumes the first '?' separates the question from the answer.
-const parseQuizContent = (content: string) => {
-    const parts = content.split('?');
-    if (parts.length > 1) {
-      const question = parts[0] + '?';
-      const answer = parts.slice(1).join('?').trim();
-      return { question, answer };
-    }
-    return { question: content, answer: 'Nenhuma resposta encontrada.' };
-  };
-
-export function StudyPlanView({ plan }: StudyPlanViewProps) {
+export function StudyPlanView({ plan }: { plan: StudyPlan }) {
   return (
     <Tabs defaultValue="summary" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5">
         <TabsTrigger value="summary">Resumo</TabsTrigger>
         <TabsTrigger value="flashcards">Flashcards</TabsTrigger>
         <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
+        <TabsTrigger value="deep-dive">Aprofundamento</TabsTrigger>
         <TabsTrigger value="observations">Observações</TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="summary" className="mt-4">
         <Card>
           <CardContent className="p-6">
-            <ScrollArea className="h-[60vh]">
-              <div className="prose dark:prose-invert max-w-none">
-                <p className="whitespace-pre-wrap">{plan.summary}</p>
-              </div>
+            <ScrollArea className="h-[60vh] pr-4">
+              <p className="whitespace-pre-wrap">{plan.summary}</p>
             </ScrollArea>
           </CardContent>
         </Card>
       </TabsContent>
 
       <TabsContent value="flashcards" className="mt-4">
-        <Carousel className="w-full max-w-xl mx-auto" opts={{ loop: true }}>
+        <Carousel
+          className="w-full max-w-xl mx-auto"
+          opts={{ loop: true }}
+        >
           <CarouselContent>
             {plan.flashcards.map((card, index) => (
               <CarouselItem key={index}>
-                <Flashcard content={card} />
+                <Flashcard front={card.front} back={card.back} />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="hidden sm:inline-flex" />
+          <CarouselNext className="hidden sm:inline-flex" />
         </Carousel>
       </TabsContent>
 
       <TabsContent value="quizzes" className="mt-4">
         <Accordion type="single" collapsible className="w-full">
-          {plan.quizzes.map((quiz, index) => {
-            const { question, answer } = parseQuizContent(quiz);
-            return (
-              <AccordionItem value={`item-${index}`} key={index}>
-                <AccordionTrigger>{question}</AccordionTrigger>
-                <AccordionContent>{answer}</AccordionContent>
-              </AccordionItem>
-            );
-          })}
+          {plan.quizzes.map((quiz, index) => (
+            <AccordionItem value={`item-${index}`} key={index}>
+              <AccordionTrigger>{quiz.question}</AccordionTrigger>
+              <AccordionContent>
+                <p className="font-semibold text-primary mb-2">Resposta:</p>
+                <p className="mb-4">{quiz.answer}</p>
+                <p className="font-semibold text-primary mb-2">Explicação:</p>
+                <p>{quiz.explanation}</p>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
+      </TabsContent>
+
+      <TabsContent value="deep-dive" className="mt-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-headline text-2xl flex items-center gap-2">
+              <GraduationCap className="h-6 w-6 text-primary" />
+              Técnica de Feynman: {plan.deepDive.feynman.concept}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            <ScrollArea className="h-[55vh] pr-4">
+              <div>
+                <h3 className="font-semibold text-lg flex items-center gap-2 mb-2">
+                  <Lightbulb className="h-5 w-5" />
+                  Explicação Simples
+                </h3>
+                <p className="pl-7">{plan.deepDive.feynman.explanation}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg flex items-center gap-2 mb-2">
+                  <Scale className="h-5 w-5" />
+                  Analogia
+                </h3>
+                <p className="pl-7">{plan.deepDive.feynman.analogy}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg flex items-center gap-2 mb-2">
+                  <GraduationCap className="h-5 w-5" />
+                  Pontos para Aprofundar
+                </h3>
+                <p className="pl-7">{plan.deepDive.feynman.gaps}</p>
+              </div>
+            </ScrollArea>
+          </CardContent>
+        </Card>
       </TabsContent>
 
       <TabsContent value="observations" className="mt-4">
         <Card>
           <CardContent className="p-6">
-             <ScrollArea className="h-[60vh]">
-                <p className="whitespace-pre-wrap">{plan.observations}</p>
-             </ScrollArea>
+            <ScrollArea className="h-[60vh] pr-4">
+              <p className="whitespace-pre-wrap">{plan.observations}</p>
+            </ScrollArea>
           </CardContent>
         </Card>
       </TabsContent>

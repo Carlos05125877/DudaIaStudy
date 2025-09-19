@@ -3,32 +3,21 @@
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { Brain, Repeat } from 'lucide-react';
 
 type FlashcardProps = {
-  content: string;
+  front: string;
+  back: string;
 };
 
-// A very simple heuristic to split question and answer.
-// Assumes the first '?' separates the question from the answer.
-const parseContent = (content: string) => {
-  const parts = content.split('?');
-  if (parts.length > 1) {
-    const question = parts[0] + '?';
-    const answer = parts.slice(1).join('?').trim();
-    return { question, answer };
-  }
-  return { question: content, answer: 'Nenhuma resposta encontrada.' };
-};
-
-export function Flashcard({ content }: FlashcardProps) {
+export function Flashcard({ front, back }: FlashcardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const { question, answer } = parseContent(content);
 
-  const cardBaseClasses = "absolute w-full h-full backface-hidden flex items-center justify-center p-6 text-center";
+  const cardBaseClasses = "absolute w-full h-full backface-hidden flex items-center justify-center p-6 text-center rounded-xl transition-all duration-500";
 
   return (
     <div
-      className="group h-64 w-full perspective-1000"
+      className="group h-80 w-full perspective-1000 cursor-pointer"
       onClick={() => setIsFlipped(!isFlipped)}
       role="button"
       tabIndex={0}
@@ -41,24 +30,32 @@ export function Flashcard({ content }: FlashcardProps) {
         )}
       >
         {/* Front of the card */}
-        <Card className={cn(cardBaseClasses, 'bg-card')}>
-          <CardContent className="p-0">
-            <p className="font-semibold text-lg">{question}</p>
+        <Card className={cn(cardBaseClasses, 'bg-card border-2 shadow-lg')}>
+          <CardContent className="p-0 flex flex-col items-center justify-center gap-4">
+            <Brain className="h-10 w-10 text-primary" />
+            <p className="font-headline text-2xl">{front}</p>
           </CardContent>
         </Card>
 
         {/* Back of the card */}
-        <Card className={cn(cardBaseClasses, 'bg-accent text-accent-foreground rotate-y-180')}>
+        <Card className={cn(cardBaseClasses, 'bg-primary text-primary-foreground border-2 border-primary rotate-y-180 shadow-lg')}>
           <CardContent className="p-0">
-            <p className="text-md">{answer}</p>
+            <p className="text-md">{back}</p>
           </CardContent>
         </Card>
       </div>
+
+      {/* Flip instruction */}
+      <div className="flex items-center justify-center text-sm text-muted-foreground mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+        <Repeat className="h-4 w-4 mr-2" />
+        Clique para virar
+      </div>
+
       <style jsx>{`
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
         .rotate-y-180 { transform: rotateY(180deg); }
-        .backface-hidden { backface-visibility: hidden; }
+        .backface-hidden { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
       `}</style>
     </div>
   );
