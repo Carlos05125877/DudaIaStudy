@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -29,7 +30,7 @@ const formSchema = z.object({
 });
 
 type CreateStudyPlanFormProps = {
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen?: (isOpen: boolean) => void;
 };
 
 export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
@@ -37,6 +38,7 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
   const [isRefining, setIsRefining] = useState(false);
   const { addStudyPlan } = useStudyPlans();
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -87,7 +89,8 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
         title: 'Plano de Estudo Gerado!',
         description: 'Seu novo plano de estudo está pronto.',
       });
-      setIsOpen(false);
+      setIsOpen?.(false);
+      router.push('/study-plans');
     } else {
       toast({
         variant: 'destructive',

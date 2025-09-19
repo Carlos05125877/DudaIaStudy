@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
@@ -41,7 +40,6 @@ import {
 
 export default function StudyPlansPage() {
   const { studyPlans, deleteStudyPlan, isLoaded } = useStudyPlans();
-  const [isCreateOpen, setCreateOpen] = useState(false);
   const noPlansImage = PlaceHolderImages.find(img => img.id === 'no-plans');
 
   if (!isLoaded) {
@@ -56,7 +54,7 @@ export default function StudyPlansPage() {
     <div className="container mx-auto p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-headline text-3xl font-bold">Meus Planos de Estudo</h1>
-        <Dialog open={isCreateOpen} onOpenChange={setCreateOpen}>
+        <Dialog>
           <DialogTrigger asChild>
             <Button>
               <Plus />
@@ -70,7 +68,7 @@ export default function StudyPlansPage() {
                 Forneça um título e seu texto jurídico para começar.
               </DialogDescription>
             </DialogHeader>
-            <CreateStudyPlanForm setIsOpen={setCreateOpen} />
+            <CreateStudyPlanForm />
           </DialogContent>
         </Dialog>
       </div>
@@ -93,7 +91,7 @@ export default function StudyPlansPage() {
           <p className="text-muted-foreground mt-2 mb-4">
             Clique em &quot;Criar Novo Plano&quot; para gerar seu primeiro plano de estudo.
           </p>
-          <Dialog open={isCreateOpen} onOpenChange={setCreateOpen}>
+          <Dialog>
             <DialogTrigger asChild>
               <Button>
                 <Plus />
@@ -107,7 +105,7 @@ export default function StudyPlansPage() {
                   Forneça um título e seu texto jurídico para começar.
                 </DialogDescription>
               </DialogHeader>
-              <CreateStudyPlanForm setIsOpen={setCreateOpen} />
+              <CreateStudyPlanForm />
             </DialogContent>
           </Dialog>
         </div>
