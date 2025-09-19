@@ -1,28 +1,28 @@
 'use server';
 /**
- * @fileOverview Generates a study plan from legal text, including summaries, quizzes, and flashcards.
+ * @fileOverview Gera um plano de estudo a partir de um texto jurídico, incluindo resumos, quizzes e flashcards.
  *
- * - generateStudyPlanFromText - A function that generates a study plan from text.
- * - GenerateStudyPlanFromTextInput - The input type for the generateStudyPlanFromText function.
- * - GenerateStudyPlanFromTextOutput - The return type for the generateStudyPlanFromText function.
+ * - generateStudyPlanFromText - Uma função que gera um plano de estudo a partir de um texto.
+ * - GenerateStudyPlanFromTextInput - O tipo de entrada para a função generateStudyPlanFromText.
+ * - GenerateStudyPlanFromTextOutput - O tipo de retorno para a função generateStudyPlanFromText.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenerateStudyPlanFromTextInputSchema = z.object({
-  legalText: z.string().describe('The legal text to generate a study plan from.'),
-  title: z.string().optional().describe('Optional custom title for the study plan.'),
+  legalText: z.string().describe('O texto jurídico a partir do qual gerar um plano de estudo.'),
+  title: z.string().optional().describe('Título personalizado opcional para o plano de estudo.'),
 });
 export type GenerateStudyPlanFromTextInput = z.infer<
   typeof GenerateStudyPlanFromTextInputSchema
 >;
 
 const GenerateStudyPlanFromTextOutputSchema = z.object({
-  summary: z.string().describe('A summary of the legal text.'),
-  quizzes: z.array(z.string()).describe('A list of quizzes generated from the legal text.'),
-  flashcards: z.array(z.string()).describe('A list of flashcards generated from the legal text.'),
-  observations: z.string().describe('Observations about the legal text.'),
+  summary: z.string().describe('Um resumo do texto jurídico.'),
+  quizzes: z.array(z.string()).describe('Uma lista de quizzes gerados a partir do texto jurídico.'),
+  flashcards: z.array(z.string()).describe('Uma lista de flashcards gerados a partir do texto jurídico.'),
+  observations: z.string().describe('Observações sobre o texto jurídico.'),
 });
 
 export type GenerateStudyPlanFromTextOutput = z.infer<
@@ -39,21 +39,21 @@ const generateStudyPlanPrompt = ai.definePrompt({
   name: 'generateStudyPlanPrompt',
   input: {schema: GenerateStudyPlanFromTextInputSchema},
   output: {schema: GenerateStudyPlanFromTextOutputSchema},
-  prompt: `You are an AI study plan generator for legal texts. Generate a study plan based on the following text. Use the title {{{title}}} if provided.
+  prompt: `Você é um gerador de planos de estudo de IA para textos jurídicos. Gere um plano de estudo com base no seguinte texto. Use o título {{{title}}} se fornecido.
 
-Legal Text: {{{legalText}}}
+Texto Jurídico: {{{legalText}}}
 
-Your study plan should include:
+Seu plano de estudo deve incluir:
 
-*   A summary of the legal text.
-*   A list of quizzes generated from the legal text.
-*   A list of flashcards generated from the legal text.
-*   Observations about the legal text.
+*   Um resumo do texto jurídico.
+*   Uma lista de quizzes gerados a partir do texto jurídico.
+*   Uma lista de flashcards gerados a partir do texto jurídico.
+*   Observações sobre o texto jurídico.
 
-Follow these instructions:
-*   Each quiz and flashcard should be a question.
-*   The legal text should be interpretable with your output.
-*   The output should be valid JSON.
+Siga estas instruções:
+*   Cada quiz e flashcard deve ser uma pergunta.
+*   O texto jurídico deve ser interpretável com sua saída.
+*   A saída deve ser um JSON válido.
 
 `,
 });

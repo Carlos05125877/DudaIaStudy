@@ -37,17 +37,17 @@ const parseQuizContent = (content: string) => {
       const answer = parts.slice(1).join('?').trim();
       return { question, answer };
     }
-    return { question: content, answer: 'No answer found.' };
+    return { question: content, answer: 'Nenhuma resposta encontrada.' };
   };
 
 export function StudyPlanView({ plan }: StudyPlanViewProps) {
   return (
     <Tabs defaultValue="summary" className="w-full">
       <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
-        <TabsTrigger value="summary">Summary</TabsTrigger>
+        <TabsTrigger value="summary">Resumo</TabsTrigger>
         <TabsTrigger value="flashcards">Flashcards</TabsTrigger>
         <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
-        <TabsTrigger value="observations">Observations</TabsTrigger>
+        <TabsTrigger value="observations">Observações</TabsTrigger>
       </TabsList>
       
       <TabsContent value="summary" className="mt-4">

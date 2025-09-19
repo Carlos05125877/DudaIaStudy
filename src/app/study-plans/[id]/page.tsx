@@ -39,7 +39,7 @@ export default function StudyPlanDetailPage() {
     <div className="container mx-auto p-4 md:p-6">
       <h1 className="font-headline text-3xl md:text-4xl font-bold mb-2">{plan?.title}</h1>
       <p className="text-muted-foreground mb-6">
-        Here is your AI-generated study plan. Use the tabs below to navigate through the materials.
+        Aqui está seu plano de estudo gerado por IA. Use as abas abaixo para navegar pelos materiais.
       </p>
       {plan && <StudyPlanView plan={plan} />}
     </div>

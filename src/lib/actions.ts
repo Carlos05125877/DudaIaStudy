@@ -9,7 +9,7 @@ export async function handleRefineText(text: string) {
     return { success: true, refinedText: result.refinedText };
   } catch (error) {
     console.error('Error refining text:', error);
-    return { success: false, error: 'Failed to refine text.' };
+    return { success: false, error: 'Falha ao refinar o texto.' };
   }
 }
 
@@ -19,6 +19,6 @@ export async function handleGenerateStudyPlan(title: string, legalText: string) 
     return { success: true, studyPlan: result };
   } catch (error) {
     console.error('Error generating study plan:', error);
-    return { success: false, error: 'Failed to generate study plan.' };
+    return { success: false, error: 'Falha ao gerar o plano de estudo.' };
   }
 }

@@ -17,7 +17,7 @@ const parseContent = (content: string) => {
     const answer = parts.slice(1).join('?').trim();
     return { question, answer };
   }
-  return { question: content, answer: 'No answer found.' };
+  return { question: content, answer: 'Nenhuma resposta encontrada.' };
 };
 
 export function Flashcard({ content }: FlashcardProps) {

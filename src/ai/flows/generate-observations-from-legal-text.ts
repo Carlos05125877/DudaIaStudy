@@ -1,22 +1,22 @@
 'use server';
 /**
- * @fileOverview A flow to generate observations from legal text.
+ * @fileOverview Um fluxo para gerar observações a partir de um texto jurídico.
  *
- * - generateObservations - A function that handles the generation of observations from legal text.
- * - GenerateObservationsInput - The input type for the generateObservations function.
- * - GenerateObservationsOutput - The return type for the generateObservations function.
+ * - generateObservations - Uma função que lida com a geração de observações a partir de um texto jurídico.
+ * - GenerateObservationsInput - O tipo de entrada para a função generateObservations.
+ * - GenerateObservationsOutput - O tipo de retorno para a função generateObservations.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenerateObservationsInputSchema = z.object({
-  legalText: z.string().describe('The legal text to generate observations from.'),
+  legalText: z.string().describe('O texto jurídico a partir do qual gerar observações.'),
 });
 export type GenerateObservationsInput = z.infer<typeof GenerateObservationsInputSchema>;
 
 const GenerateObservationsOutputSchema = z.object({
-  observations: z.string().describe('The observations generated from the legal text.'),
+  observations: z.string().describe('As observações geradas a partir do texto jurídico.'),
 });
 export type GenerateObservationsOutput = z.infer<typeof GenerateObservationsOutputSchema>;
 
@@ -28,7 +28,7 @@ const prompt = ai.definePrompt({
   name: 'generateObservationsPrompt',
   input: {schema: GenerateObservationsInputSchema},
   output: {schema: GenerateObservationsOutputSchema},
-  prompt: `You are an expert in legal text analysis. Please read the following legal text and generate observations about it.\n\nLegal Text: {{{legalText}}}`,
+  prompt: `Você é um especialista em análise de textos jurídicos. Por favor, leia o seguinte texto jurídico e gere observações sobre ele.\n\nTexto Jurídico: {{{legalText}}}`,
 });
 
 const generateObservationsFlow = ai.defineFlow(

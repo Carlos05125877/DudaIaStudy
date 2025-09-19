@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "no-plans",
-      "description": "Illustration for empty study plans list",
+      "description": "Ilustração para lista de planos de estudo vazia",
       "imageUrl": "https://picsum.photos/seed/duda-ai-study/600/400",
-      "imageHint": "books library"
+      "imageHint": "livros biblioteca"
     }
   ]
 }

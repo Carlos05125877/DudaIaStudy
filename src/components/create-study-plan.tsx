@@ -24,8 +24,8 @@ import { Loader2, Sparkles } from 'lucide-react';
 import type { StudyPlan } from '@/lib/types';
 
 const formSchema = z.object({
-  title: z.string().min(3, 'Title must be at least 3 characters.'),
-  legalText: z.string().min(50, 'Legal text must be at least 50 characters.'),
+  title: z.string().min(3, 'O título deve ter pelo menos 3 caracteres.'),
+  legalText: z.string().min(50, 'O texto jurídico deve ter pelo menos 50 caracteres.'),
 });
 
 type CreateStudyPlanFormProps = {
@@ -49,7 +49,7 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
   const onRefine = async () => {
     const legalText = form.getValues('legalText');
     if (!legalText) {
-      form.setError('legalText', { message: 'Please enter some text to refine.' });
+      form.setError('legalText', { message: 'Por favor, insira algum texto para refinar.' });
       return;
     }
     setIsRefining(true);
@@ -57,13 +57,13 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
     if (result.success && result.refinedText) {
       form.setValue('legalText', result.refinedText);
       toast({
-        title: 'Text Refined',
-        description: 'Your text has been refined by AI.',
+        title: 'Texto Refinado',
+        description: 'Seu texto foi refinado pela IA.',
       });
     } else {
       toast({
         variant: 'destructive',
-        title: 'Refinement Failed',
+        title: 'Falha no Refinamento',
         description: result.error,
       });
     }
@@ -84,14 +84,14 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
       };
       addStudyPlan(newPlan);
       toast({
-        title: 'Study Plan Generated!',
-        description: 'Your new study plan is ready.',
+        title: 'Plano de Estudo Gerado!',
+        description: 'Seu novo plano de estudo está pronto.',
       });
       setIsOpen(false);
     } else {
       toast({
         variant: 'destructive',
-        title: 'Generation Failed',
+        title: 'Falha na Geração',
         description: result.error,
       });
     }
@@ -106,9 +106,9 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Study Plan Title</FormLabel>
+              <FormLabel>Título do Plano de Estudo</FormLabel>
               <FormControl>
-                <Input placeholder="e.g., Contract Law Basics" {...field} />
+                <Input placeholder="ex: Noções Básicas de Direito Contratual" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -119,10 +119,10 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
           name="legalText"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Legal Text</FormLabel>
+              <FormLabel>Texto Jurídico</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Paste your legal text here..."
+                  placeholder="Cole seu texto jurídico aqui..."
                   className="min-h-[200px]"
                   {...field}
                 />
@@ -134,11 +134,11 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
         <div className="flex flex-col sm:flex-row gap-2">
             <Button type="button" variant="outline" onClick={onRefine} disabled={isRefining || isGenerating}>
                 {isRefining ? <Loader2 className="animate-spin" /> : <Sparkles />}
-                Refine with AI
+                Refinar com IA
             </Button>
             <Button type="submit" disabled={isGenerating || isRefining} className="flex-grow">
                 {isGenerating ? <Loader2 className="animate-spin" /> : null}
-                Generate Study Plan
+                Gerar Plano de Estudo
             </Button>
         </div>
       </form>
