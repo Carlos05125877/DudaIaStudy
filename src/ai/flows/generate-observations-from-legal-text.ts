@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview Um fluxo para gerar observações a partir de um texto jurídico.
+ * @fileOverview Um fluxo para gerar observações e pontos de atenção a partir de um texto jurídico.
  *
  * - generateObservations - Uma função que lida com a geração de observações a partir de um texto jurídico.
  * - GenerateObservationsInput - O tipo de entrada para a função generateObservations.
@@ -16,7 +16,7 @@ const GenerateObservationsInputSchema = z.object({
 export type GenerateObservationsInput = z.infer<typeof GenerateObservationsInputSchema>;
 
 const GenerateObservationsOutputSchema = z.object({
-  observations: z.string().describe('As observações geradas a partir do texto jurídico.'),
+  observations: z.string().describe('Uma análise dos pontos de atenção, ambiguidades ou implicações práticas do texto jurídico.'),
 });
 export type GenerateObservationsOutput = z.infer<typeof GenerateObservationsOutputSchema>;
 
@@ -28,7 +28,17 @@ const prompt = ai.definePrompt({
   name: 'generateObservationsPrompt',
   input: {schema: GenerateObservationsInputSchema},
   output: {schema: GenerateObservationsOutputSchema},
-  prompt: `Você é um especialista em análise de textos jurídicos. Por favor, leia o seguinte texto jurídico e gere observações sobre ele.\n\nTexto Jurídico: {{{legalText}}}`,
+  prompt: `Você é um advogado experiente analisando um documento para um colega júnior. Leia o texto jurídico abaixo e identifique os principais pontos de atenção.
+
+Texto Jurídico:
+{{{legalText}}}
+
+Sua análise deve focar em:
+-   **Pontos Críticos**: Quais são as cláusulas ou artigos mais importantes e por quê?
+-   **Ambiguidades ou Riscos**: Existem termos vagos, potenciais brechas ou riscos que um estudante de direito deva notar?
+-   **Implicações Práticas**: Como este texto se aplica em situações reais? Quais são as consequências práticas dos seus termos?
+
+Formate suas observações como um texto coeso e de fácil compreensão.`,
 });
 
 const generateObservationsFlow = ai.defineFlow(

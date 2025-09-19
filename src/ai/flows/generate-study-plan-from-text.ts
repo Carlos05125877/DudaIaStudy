@@ -19,10 +19,9 @@ export type GenerateStudyPlanFromTextInput = z.infer<
 >;
 
 const GenerateStudyPlanFromTextOutputSchema = z.object({
-  summary: z.string().describe('Um resumo do texto jurídico.'),
-  quizzes: z.array(z.string()).describe('Uma lista de quizzes gerados a partir do texto jurídico.'),
-  flashcards: z.array(z.string()).describe('Uma lista de flashcards gerados a partir do texto jurídico.'),
-  observations: z.string().describe('Observações sobre o texto jurídico.').optional(),
+  summary: z.string().describe('Um resumo conciso do texto jurídico, com no máximo 300 palavras.'),
+  quizzes: z.array(z.string()).describe('Uma lista de 5 a 10 perguntas de múltipla escolha ou verdadeiro/falso baseadas no texto. Cada pergunta deve incluir a resposta correta e uma breve explicação.'),
+  flashcards: z.array(z.string()).describe('Uma lista de 5 a 10 flashcards. Cada flashcard deve ter uma pergunta (termo ou conceito) na frente e uma resposta (definição ou explicação) no verso.'),
 });
 
 export type GenerateStudyPlanFromTextOutput = z.infer<
@@ -39,22 +38,19 @@ const generateStudyPlanPrompt = ai.definePrompt({
   name: 'generateStudyPlanPrompt',
   input: {schema: GenerateStudyPlanFromTextInputSchema},
   output: {schema: GenerateStudyPlanFromTextOutputSchema},
-  prompt: `Você é um gerador de planos de estudo de IA para textos jurídicos. Gere um plano de estudo com base no seguinte texto. Use o título {{{title}}} se fornecido.
+  prompt: `Você é um especialista em educação jurídica. Crie um plano de estudo claro e eficaz a partir do texto jurídico fornecido.
 
-Texto Jurídico: {{{legalText}}}
+Texto Jurídico:
+{{{legalText}}}
 
-Seu plano de estudo deve incluir:
+Título do Plano (opcional): {{{title}}}
 
-*   Um resumo do texto jurídico.
-*   Uma lista de quizzes gerados a partir do texto jurídico.
-*   Uma lista de flashcards gerados a partir do texto jurídico.
+Instruções Detalhadas:
+1.  **Resumo**: Crie um resumo informativo e conciso do texto, destacando os pontos jurídicos mais importantes. Limite a 300 palavras.
+2.  **Quizzes**: Elabore entre 5 e 10 perguntas de múltipla escolha ou verdadeiro/falso que testem o conhecimento sobre o texto. Para cada pergunta, forneça a questão, a resposta correta e uma breve explicação do porquê.
+3.  **Flashcards**: Crie entre 5 e 10 flashcards. Cada um deve conter um termo jurídico ou conceito chave na "frente" e sua definição ou explicação no "verso", baseando-se estritamente no conteúdo do texto fornecido. Formate cada flashcard como "Frente: [pergunta]? Verso: [resposta]".
 
-Siga estas instruções:
-*   Cada quiz e flashcard deve ser uma pergunta.
-*   O texto jurídico deve ser interpretável com sua saída.
-*   A saída deve ser um JSON válido.
-
-`,
+Garanta que todo o conteúdo gerado seja preciso, relevante e diretamente derivado do texto jurídico. A saída deve ser um objeto JSON válido que corresponda ao esquema definido.`,
 });
 
 const generateStudyPlanFromTextFlow = ai.defineFlow(

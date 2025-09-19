@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview Um agente de IA que refina o texto jurídico enviado usando sugestões de IA.
+ * @fileOverview Um agente de IA que refina o texto jurídico enviado para otimizá-lo para a criação de materiais de estudo.
  *
  * - refineUploadedText - Uma função que refina o texto com sugestões de IA.
  * - RefineUploadedTextInput - O tipo de entrada para a função refineUploadedText.
@@ -17,7 +17,7 @@ const RefineUploadedTextInputSchema = z.object({
 export type RefineUploadedTextInput = z.infer<typeof RefineUploadedTextInputSchema>;
 
 const RefineUploadedTextOutputSchema = z.object({
-  refinedText: z.string().describe('O texto jurídico refinado com as sugestões de IA aplicadas.'),
+  refinedText: z.string().describe('O texto jurídico reescrito para maior clareza e adequação para fins de estudo.'),
 });
 export type RefineUploadedTextOutput = z.infer<typeof RefineUploadedTextOutputSchema>;
 
@@ -29,13 +29,18 @@ const refineUploadedTextPrompt = ai.definePrompt({
   name: 'refineUploadedTextPrompt',
   input: {schema: RefineUploadedTextInputSchema},
   output: {schema: RefineUploadedTextOutputSchema},
-  prompt: `Você é um assistente de IA projetado para refinar textos jurídicos para melhorar sua qualidade e foco para a geração de planos de estudo.
+  prompt: `Você é um editor jurídico especializado em simplificar textos complexos para estudantes. Sua tarefa é refinar o texto abaixo para que ele seja ideal para a criação de resumos, quizzes e flashcards.
 
-  Por favor, revise o seguinte texto jurídico e sugira refinamentos para melhorar a clareza, concisão e relevância. Concentre-se em sugerir melhorias que tornariam o texto mais adequado para gerar resumos, quizzes e flashcards.
+Instruções:
+1.  Melhore a clareza e a concisão sem perder o significado jurídico.
+2.  Estruture o texto de forma lógica, usando parágrafos curtos e, se apropriado, listas.
+3.  Elimine jargões desnecessários ou explique-os de forma simples.
+4.  O resultado deve ser apenas o texto refinado, sem comentários adicionais.
 
-  Texto Original: {{{text}}}
+Texto Original:
+{{{text}}}
 
-  Texto Refinado:`, // Garanta que a saída seja apenas o texto refinado
+Texto Refinado:`,
 });
 
 const refineUploadedTextFlow = ai.defineFlow(
