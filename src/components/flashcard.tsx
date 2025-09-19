@@ -23,11 +23,9 @@ export function Flashcard({ front, back }: FlashcardProps) {
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' || e.key === ' ' ? setIsFlipped(!isFlipped) : null}
     >
-      <div
-        className={cn('relative w-full h-full transform-style-3d transition-transform duration-700', isFlipped ? 'rotate-y-180' : '')}
-      >
+      <div className="relative w-full h-full">
         {/* Front of the card */}
-        <Card className={cn(cardBaseClasses, 'bg-card border-2 shadow-lg')}>
+        <Card className={cn(cardBaseClasses, 'bg-card border-2 shadow-lg', isFlipped ? 'rotate-y-180' : '')}>
           <CardContent className="p-0 flex flex-col items-center justify-center gap-4">
             <Brain className="h-10 w-10 text-primary" />
             <p className="font-headline text-2xl">{front}</p>
@@ -35,7 +33,7 @@ export function Flashcard({ front, back }: FlashcardProps) {
         </Card>
 
         {/* Back of the card */}
-        <Card className={cn(cardBaseClasses, 'bg-accent text-accent-foreground border-2 border-accent shadow-lg rotate-y-180')}>
+        <Card className={cn(cardBaseClasses, 'bg-primary text-primary-foreground border-2 border-primary shadow-lg', isFlipped ? '' : 'rotate-y-180')}>
           <CardContent className="p-0">
             <p className="text-md">{back}</p>
           </CardContent>
@@ -50,7 +48,6 @@ export function Flashcard({ front, back }: FlashcardProps) {
 
       <style jsx>{`
         .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
         .rotate-y-180 { transform: rotateY(180deg); }
         .backface-hidden { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
       `}</style>
