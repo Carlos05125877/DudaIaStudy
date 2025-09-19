@@ -17,7 +17,7 @@ const RefineUploadedTextInputSchema = z.object({
 export type RefineUploadedTextInput = z.infer<typeof RefineUploadedTextInputSchema>;
 
 const RefineUploadedTextOutputSchema = z.object({
-  refinedText: z.string().describe('O texto jurídico reescrito para maior clareza e adequação para fins de estudo.'),
+  refinedText: z.string().describe('O texto jurídico reescrito para máxima clareza, profundidade e adequação para fins de estudo.'),
 });
 export type RefineUploadedTextOutput = z.infer<typeof RefineUploadedTextOutputSchema>;
 
@@ -29,13 +29,13 @@ const refineUploadedTextPrompt = ai.definePrompt({
   name: 'refineUploadedTextPrompt',
   input: {schema: RefineUploadedTextInputSchema},
   output: {schema: RefineUploadedTextOutputSchema},
-  prompt: `Você é um editor jurídico especializado em simplificar textos complexos para estudantes. Sua tarefa é refinar o texto abaixo para que ele seja ideal para a criação de resumos, quizzes e flashcards.
+  prompt: `Você é um editor jurídico sênior, especializado em transformar textos densos em materiais de estudo claros e profundos. Sua tarefa é refinar o texto abaixo para que ele seja a base ideal para uma análise jurídica aprofundada.
 
 Instruções:
-1.  Melhore a clareza e a concisão sem perder o significado jurídico.
-2.  Estruture o texto de forma lógica, usando parágrafos curtos e, se apropriado, listas.
-3.  Elimine jargões desnecessários ou explique-os de forma simples.
-4.  O resultado deve ser apenas o texto refinado, sem comentários adicionais.
+1.  **Clareza e Profundidade**: Aumente a clareza e a concisão, mas, crucialmente, adicione contexto ou explicações onde for necessário para aprofundar o entendimento. Não perca nenhum detalhe jurídico importante.
+2.  **Estrutura Lógica**: Organize o texto de forma impecavelmente lógica. Use parágrafos bem definidos, listas e outros elementos para criar uma estrutura que facilite a análise e o estudo.
+3.  **Jargão com Contexto**: Não elimine jargões importantes. Em vez disso, certifique-se de que seu significado seja absolutamente claro no contexto do documento.
+4.  **Resultado Puro**: O resultado deve ser apenas o texto refinado, pronto para ser usado como material de estudo principal.
 
 Texto Original:
 {{{text}}}

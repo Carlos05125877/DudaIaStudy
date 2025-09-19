@@ -16,7 +16,7 @@ const GenerateObservationsInputSchema = z.object({
 export type GenerateObservationsInput = z.infer<typeof GenerateObservationsInputSchema>;
 
 const GenerateObservationsOutputSchema = z.object({
-  observations: z.string().describe('Uma análise dos pontos de atenção, ambiguidades ou implicações práticas do texto jurídico.'),
+  observations: z.string().describe('Uma análise aprofundada e detalhada dos pontos de atenção, ambiguidades ou implicações práticas do texto jurídico.'),
 });
 export type GenerateObservationsOutput = z.infer<typeof GenerateObservationsOutputSchema>;
 
@@ -28,17 +28,18 @@ const prompt = ai.definePrompt({
   name: 'generateObservationsPrompt',
   input: {schema: GenerateObservationsInputSchema},
   output: {schema: GenerateObservationsOutputSchema},
-  prompt: `Você é um advogado experiente analisando um documento para um colega júnior. Leia o texto jurídico abaixo e identifique os principais pontos de atenção.
+  prompt: `Você é um advogado sênior altamente experiente, preparando um parecer detalhado sobre um documento para um cliente importante. Sua análise precisa ser exaustiva e minuciosa. Leia o texto jurídico abaixo e destrinche todos os pontos de atenção.
 
 Texto Jurídico:
 {{{legalText}}}
 
-Sua análise deve focar em:
--   **Pontos Críticos**: Quais são as cláusulas ou artigos mais importantes e por quê?
--   **Ambiguidades ou Riscos**: Existem termos vagos, potenciais brechas ou riscos que um estudante de direito deva notar?
--   **Implicações Práticas**: Como este texto se aplica em situações reais? Quais são as consequências práticas dos seus termos?
+Sua análise deve ser extremamente aprofundada, focando em:
+-   **Pontos Críticos e Estratégicos**: Quais são as cláusulas ou artigos mais importantes e por quê? Quais são as implicações estratégicas de cada um?
+-   **Análise de Riscos e Ambiguidades**: Identifique todos os termos vagos, potenciais brechas, riscos ocultos e passivos contingentes. Aprofunde-se nas possíveis interpretações e seus cenários.
+-   **Implicações Práticas e Operacionais**: Como este texto se traduzirá em operações do dia a dia? Quais são as consequências práticas, financeiras e operacionais de cada termo?
+-   **Recomendações e Pontos de Ação**: Com base na sua análise, forneça recomendações claras e pontos de ação.
 
-Formate suas observações como um texto coeso e de fácil compreensão.`,
+Formate suas observações como um parecer jurídico completo, coeso e de fácil compreensão, mas sem sacrificar a profundidade técnica.`,
 });
 
 const generateObservationsFlow = ai.defineFlow(

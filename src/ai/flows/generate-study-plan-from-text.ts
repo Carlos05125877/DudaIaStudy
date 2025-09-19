@@ -26,7 +26,7 @@ export type GenerateStudyPlanFromTextInput = z.infer<
 const GenerateStudyPlanFromTextOutputSchema = z.object({
   summary: z
     .string()
-    .describe('Um resumo conciso do texto jurídico, com no máximo 300 palavras.'),
+    .describe('Um resumo exaustivo e detalhado do texto jurídico.'),
   quizzes: z
     .array(
       z.object({
@@ -34,7 +34,7 @@ const GenerateStudyPlanFromTextOutputSchema = z.object({
         answer: z.string().describe('A resposta correta para a pergunta.'),
         explanation: z
           .string()
-          .describe('Uma breve explicação sobre a resposta.'),
+          .describe('Uma explicação detalhada sobre a resposta.'),
       })
     )
     .describe(
@@ -44,7 +44,7 @@ const GenerateStudyPlanFromTextOutputSchema = z.object({
     .array(
       z.object({
         front: z.string().describe('O termo ou conceito na frente do flashcard.'),
-        back: z.string().describe('A definição ou explicação no verso do flashcard.'),
+        back: z.string().describe('A definição ou explicação detalhada no verso do flashcard.'),
       })
     )
     .describe('Uma lista de 5 a 10 flashcards.'),
@@ -58,17 +58,17 @@ const GenerateStudyPlanFromTextOutputSchema = z.object({
       explanation: z
         .string()
         .describe(
-          'Uma explicação do conceito em termos muito simples, como se fosse para uma criança de 12 anos.'
+          'Uma explicação detalhada do conceito em termos muito simples, como se fosse para uma criança de 12 anos, mas sem perder a profundidade.'
         ),
       analogy: z
         .string()
         .describe(
-          'Uma analogia ou exemplo do dia a dia para ilustrar o conceito.'
+          'Uma analogia ou exemplo do dia a dia bem elaborado para ilustrar o conceito.'
         ),
       gaps: z
         .string()
         .describe(
-          'Pontos onde a explicação simplificada pode falhar ou áreas que precisariam de mais estudo para um entendimento completo.'
+          'Pontos onde a explicação simplificada pode falhar e uma análise aprofundada das áreas que precisariam de mais estudo para um entendimento completo.'
         ),
     }),
   }),
@@ -88,7 +88,7 @@ const generateStudyPlanPrompt = ai.definePrompt({
   name: 'generateStudyPlanPrompt',
   input: {schema: GenerateStudyPlanFromTextInputSchema},
   output: {schema: GenerateStudyPlanFromTextOutputSchema},
-  prompt: `Você é um especialista em educação jurídica. Crie um plano de estudo claro e eficaz a partir do texto jurídico fornecido.
+  prompt: `Você é um jurista e educador sênior, conhecido por sua capacidade de ensinar temas complexos de forma profunda e clara. Sua tarefa é criar um plano de estudo exaustivo a partir do texto jurídico fornecido. O conteúdo gerado deve ser o mais detalhado e aprofundado possível. Destrinche totalmente o assunto.
 
 Texto Jurídico:
 {{{legalText}}}
@@ -96,12 +96,12 @@ Texto Jurídico:
 Título do Plano (opcional): {{{title}}}
 
 Instruções Detalhadas:
-1.  **Resumo**: Crie um resumo informativo e conciso do texto, destacando os pontos jurídicos mais importantes. Limite a 300 palavras.
-2.  **Quizzes**: Elabore entre 5 e 10 perguntas (múltipla escolha ou verdadeiro/falso) que testem o conhecimento sobre o texto. Para cada pergunta, forneça a questão, a resposta correta e uma breve explicação.
-3.  **Flashcards**: Crie entre 5 e 10 flashcards. Cada um deve conter um termo ou conceito chave na "frente" e sua definição ou explicação no "verso".
-4.  **Aprofundamento (Técnica de Feynman)**: Identifique o conceito central do texto. Explique-o de forma extremamente simples, como se estivesse ensinando a alguém sem conhecimento jurídico. Use uma analogia do cotidiano e, ao final, aponte quais são as lacunas ou simplificações em sua explicação que um estudante precisaria aprofundar.
+1.  **Resumo Aprofundado**: Crie um resumo exaustivo e detalhado do texto. Não se limite a uma visão geral; explore as nuances, os princípios subjacentes e as implicações de cada parte do texto.
+2.  **Quizzes Desafiadores**: Elabore entre 5 e 10 perguntas que testem um entendimento profundo do texto. Para cada pergunta, forneça a resposta correta e uma explicação detalhada e abrangente.
+3.  **Flashcards Completos**: Crie entre 5 e 10 flashcards. A "frente" deve ter um termo-chave. O "verso" deve conter uma definição completa e detalhada, incluindo contexto e exemplos.
+4.  **Aprofundamento (Técnica de Feynman Avançada)**: Identifique o conceito central do texto. Explique-o de forma extremamente clara, mas sem sacrificar a profundidade. Use uma analogia robusta e bem desenvolvida. Ao final, faça uma análise crítica das lacunas e complexidades, indicando caminhos para um estudo ainda mais aprofundado.
 
-Garanta que todo o conteúdo gerado seja preciso, relevante e diretamente derivado do texto jurídico. A saída deve ser um objeto JSON válido que corresponda ao esquema definido.`,
+Garanta que todo o conteúdo seja preciso, relevante e diretamente derivado do texto jurídico. A saída deve ser um objeto JSON válido que corresponda ao esquema definido.`,
 });
 
 const generateStudyPlanFromTextFlow = ai.defineFlow(
