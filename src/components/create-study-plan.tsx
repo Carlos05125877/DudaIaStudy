@@ -23,17 +23,14 @@ import { handleGenerateStudyPlan, handleRefineText } from '@/lib/actions';
 import { useStudyPlans } from '@/hooks/use-study-plans';
 import { Loader2, Sparkles } from 'lucide-react';
 import type { StudyPlan } from '@/lib/types';
+import { DialogClose } from './ui/dialog';
 
 const formSchema = z.object({
   title: z.string().min(3, 'O título deve ter pelo menos 3 caracteres.'),
   legalText: z.string().min(50, 'O texto jurídico deve ter pelo menos 50 caracteres.'),
 });
 
-type CreateStudyPlanFormProps = {
-  setIsOpen?: (isOpen: boolean) => void;
-};
-
-export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
+export function CreateStudyPlanForm() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isRefining, setIsRefining] = useState(false);
   const { addStudyPlan } = useStudyPlans();
@@ -82,15 +79,18 @@ export function CreateStudyPlanForm({ setIsOpen }: CreateStudyPlanFormProps) {
         createdAt: new Date().toISOString(),
         title: values.title,
         sourceText: values.legalText,
-        ...result.studyPlan,
+        summary: result.studyPlan.summary,
+        quizzes: result.studyPlan.quizzes,
+        flashcards: result.studyPlan.flashcards,
+        deepDive: result.studyPlan.deepDive,
+        observations: result.studyPlan.observations,
       };
       addStudyPlan(newPlan);
       toast({
         title: 'Plano de Estudo Gerado!',
         description: 'Seu novo plano de estudo está pronto.',
       });
-      setIsOpen?.(false);
-      router.push('/study-plans');
+      router.push(`/study-plans/${newPlan.id}`);
     } else {
       toast({
         variant: 'destructive',
