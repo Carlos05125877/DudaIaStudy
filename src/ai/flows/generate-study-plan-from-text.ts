@@ -38,7 +38,7 @@ const GenerateStudyPlanFromTextOutputSchema = z.object({
       })
     )
     .describe(
-      'Uma lista de 5 a 10 perguntas (múltipla escolha ou V/F) baseadas no texto.'
+      'Uma lista de 10 a 15 perguntas (múltipla escolha ou V/F) baseadas no texto.'
     ),
   flashcards: z
     .array(
@@ -97,9 +97,13 @@ Título do Plano (opcional): {{{title}}}
 
 Instruções Detalhadas:
 1.  **Resumo Aprofundado**: Crie um resumo exaustivo e detalhado do texto. Não se limite a uma visão geral; explore as nuances, os princípios subjacentes e as implicações de cada parte do texto.
-2.  **Quizzes Desafiadores**: Elabore entre 5 e 10 perguntas que testem um entendimento profundo do texto. Para cada pergunta, forneça a resposta correta e uma explicação detalhada e abrangente.
-3.  **Flashcards Completos**: Crie entre 5 e 10 flashcards. A "frente" deve ter um termo-chave. O "verso" deve conter uma definição completa e detalhada, incluindo contexto e exemplos.
-4.  **Aprofundamento (Técnica de Feynman Avançada)**: Identifique o conceito central do texto. Explique-o de forma extremamente clara, mas sem sacrificar a profundidade. Use uma analogia robusta e bem desenvolvida. Ao final, faça uma análise crítica das lacunas e complexidades, indicando caminhos para um estudo ainda mais aprofundado.
+2.  **Quizzes Desafiadores**: Elabore entre 10 e 15 perguntas que testem um entendimento profundo do texto. Para cada pergunta, forneça a resposta correta e uma explicação detalhada e abrangente, citando, sempre que possível, o artigo ou termo jurídico correspondente.
+3.  **Flashcards Completos**: Crie entre 5 e 10 flashcards. A "frente" deve ter um termo-chave ou artigo de lei. O "verso" deve conter uma definição completa e detalhada, incluindo contexto, exemplos e referências a artigos ou códigos relacionados.
+4.  **Aprofundamento (Técnica de Feynman Avançada)**: Identifique o conceito jurídico central do texto.
+    -   **Explique-o** de forma extremamente clara, como se fosse para um leigo inteligente, mas sem sacrificar a profundidade técnica.
+    -   **Use uma analogia robusta** e bem desenvolvida para ilustrar o conceito.
+    -   **Faça uma análise crítica das lacunas e complexidades**: Aponte os pontos onde a simplificação pode falhar e as nuances que um profissional do direito deve dominar.
+    -   **Fundamente com Citações**: Inclua citações de doutrina, artigos de lei ou jurisprudência para suportar a explicação e indicar caminhos para um estudo ainda mais aprofundado.
 
 Garanta que todo o conteúdo seja preciso, relevante e diretamente derivado do texto jurídico. A saída deve ser um objeto JSON válido que corresponda ao esquema definido.`,
 });

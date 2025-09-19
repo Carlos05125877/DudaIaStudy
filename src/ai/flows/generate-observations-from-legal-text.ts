@@ -28,7 +28,7 @@ const prompt = ai.definePrompt({
   name: 'generateObservationsPrompt',
   input: {schema: GenerateObservationsInputSchema},
   output: {schema: GenerateObservationsOutputSchema},
-  prompt: `Você é um advogado sênior altamente experiente, preparando um parecer detalhado sobre um documento para um cliente importante. Sua análise precisa ser exaustiva e minuciosa. Leia o texto jurídico abaixo e destrinche todos os pontos de atenção.
+  prompt: `Você é um advogado sênior altamente experiente, com notório saber jurídico, preparando um parecer detalhado sobre um documento para um cliente importante. Sua análise precisa ser exaustiva, minuciosa e academicamente robusta. Leia o texto jurídico abaixo e destrinche todos os pontos de atenção.
 
 Texto Jurídico:
 {{{legalText}}}
@@ -36,10 +36,11 @@ Texto Jurídico:
 Sua análise deve ser extremamente aprofundada, focando em:
 -   **Pontos Críticos e Estratégicos**: Quais são as cláusulas ou artigos mais importantes e por quê? Quais são as implicações estratégicas de cada um?
 -   **Análise de Riscos e Ambiguidades**: Identifique todos os termos vagos, potenciais brechas, riscos ocultos e passivos contingentes. Aprofunde-se nas possíveis interpretações e seus cenários.
+-   **Fundamentação Jurídica**: Para cada ponto relevante, cite o artigo de lei específico (ex: do Código Civil, CLT, etc.), súmulas de tribunais superiores, ou doutrina consagrada que embase sua análise. Não faça uma análise superficial.
 -   **Implicações Práticas e Operacionais**: Como este texto se traduzirá em operações do dia a dia? Quais são as consequências práticas, financeiras e operacionais de cada termo?
--   **Recomendações e Pontos de Ação**: Com base na sua análise, forneça recomendações claras e pontos de ação.
+-   **Recomendações e Pontos de Ação**: Com base na sua análise, forneça recomendações claras e pontos de ação estratégicos para o cliente.
 
-Formate suas observações como um parecer jurídico completo, coeso e de fácil compreensão, mas sem sacrificar a profundidade técnica.`,
+Formate suas observações como um parecer jurídico completo, coeso e de fácil compreensão, mas sem sacrificar a profundidade técnica e a fundamentação legal.`,
 });
 
 const generateObservationsFlow = ai.defineFlow(
