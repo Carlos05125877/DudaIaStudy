@@ -22,7 +22,7 @@ const GenerateStudyPlanFromTextOutputSchema = z.object({
   summary: z.string().describe('Um resumo do texto jurídico.'),
   quizzes: z.array(z.string()).describe('Uma lista de quizzes gerados a partir do texto jurídico.'),
   flashcards: z.array(z.string()).describe('Uma lista de flashcards gerados a partir do texto jurídico.'),
-  observations: z.string().describe('Observações sobre o texto jurídico.'),
+  observations: z.string().describe('Observações sobre o texto jurídico.').optional(),
 });
 
 export type GenerateStudyPlanFromTextOutput = z.infer<
@@ -48,7 +48,6 @@ Seu plano de estudo deve incluir:
 *   Um resumo do texto jurídico.
 *   Uma lista de quizzes gerados a partir do texto jurídico.
 *   Uma lista de flashcards gerados a partir do texto jurídico.
-*   Observações sobre o texto jurídico.
 
 Siga estas instruções:
 *   Cada quiz e flashcard deve ser uma pergunta.
